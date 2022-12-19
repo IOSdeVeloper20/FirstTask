@@ -8,15 +8,20 @@
 import UIKit
 
 class ProductsViewController: UITableViewController {
-    let jdata = JsonData()
     
-    let products = ["iphone 9", "iphone x", "iphone 11"]
+    let p = ParseJson()
+    let j = JsonData()
+    
+    let products = ["iphone x", "iphone 11"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        p.pars()
     }
+    
+    
+    
     
     //MARK: tableView DataSource Methods
     
@@ -36,6 +41,7 @@ class ProductsViewController: UITableViewController {
         
         return Cell
     }
+    
     
     
     

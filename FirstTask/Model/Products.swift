@@ -6,6 +6,12 @@
 //
 
 import Foundation
+
+struct JsonData: Codable {
+    var products:[Products]?
+}
+
+
 struct Products: Codable {
     var id:Int?
     var title: String?
@@ -13,5 +19,8 @@ struct Products: Codable {
     var price: Double?
     var brand:String?
     var thumbnail:String?
-    //var images:[images]?
+    let images:[String]
 }
+
+
+
