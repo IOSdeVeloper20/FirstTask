@@ -8,17 +8,17 @@
 import Foundation
 
 struct JsonData: Codable {
-    var products:[Products]?
+    let products:[Products]
 }
 
 
 struct Products: Codable {
-    var id:Int?
-    var title: String?
-    var description:String?
-    var price: Double?
-    var brand:String?
-    var thumbnail:String?
+    let id:Int
+    let title: String
+    let description:String
+    let price: Double
+    let brand:String
+    let thumbnail:String
     let images:[String]
 }
 

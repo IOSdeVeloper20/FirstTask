@@ -9,20 +9,31 @@ import UIKit
 
 class ProductDetailsController: UIViewController {
     
+    //MARK: IBOutles
+    @IBOutlet weak var imageView: UIImageView!
+    
+    @IBOutlet weak var brandLabel: UILabel!
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var descriptionLable: UILabel!
+    
+    @IBOutlet weak var priceLabel: UILabel!
+    
+    //MARK: Variables
+    let passedArray: Products = 
+    let productTitle: String = ""
+    let productPrice: Int = 0
+    let productDescription: String = ""
+    let productBrand: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
-        /*
-         // MARK: - Navigation
-         
-         // In a storyboard-based application, you will often want to do a little preparation before navigation
-         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         // Get the new view controller using segue.destination.
-         // Pass the selected object to the new view controller.
-         }
-         */
-        
+        brandLabel.text = passedArray.brand
+        titleLabel.text = passedArray.title
+        descriptionLable.text = passedArray.description
+        priceLabel.text = String(passedArray.price)
         
     }
 }

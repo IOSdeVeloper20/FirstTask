@@ -7,56 +7,89 @@
 
 import UIKit
 
-class ProductsViewController: UITableViewController {
+class ProductsViewController: UIViewController {
     
-    let p = ParseJson()
-    let j = JsonData()
+    @IBOutlet weak var tableView: UITableView!
     
-    let products = ["iphone x", "iphone 11"]
-
+    var object: [Products] = []
+    
+    //let pr = ["ahmed", "sherif"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        p.pars()
-    }
-    
-    
-    
-    
-    //MARK: tableView DataSource Methods
-    
-    
-    //method determines how many rows there will be in the table view.
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return products.count
-    }
-    
-    
-    //method sets up each row.
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let Cell =
-        tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath)
         
-        Cell.textLabel?.text = products[indexPath.row]
+        tableViewConfig()
         
-        return Cell
-    }
-    
-    
-    
-    
-    //MARK: tableView Delegate Methods
-
-    
-    //The didSelectRowAtIndexPath method is called every time a row is tapped.
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(products[indexPath.row])
+        //MARK: Parsing json
+        let urlString = "https://dummyjson.com/products"
         
+        let url = URL(string: urlString)
         
-        // to make a cell flash gray when selected
-        tableView.deselectRow(at: indexPath, animated: true)
+        guard url != nil else {
+            return
+        }
+        
+        //2. create url session
+        let session = URLSession(configuration: .default)
+        
+        //3. give urlSession a task
+        let task = session.dataTask(with: url!) { (data, response, error) in
+            //check for errors
+            if(error == nil && data != nil){
+                //parse json
+                let decoder = JSONDecoder()
+                
+                do {
+                    let info = try decoder.decode(JsonData.self, from: data!)
+                    
+                    
+                    let title = info.products[1].title
+                    print(title)
+                    print(info)
+                } catch {
+                    print("ERROR parsing JSON")
+                }
+            }
+        }
+        //4. start the task
+        task.resume()
     }
 
+    //MARK: TableView Configuration
+    func tableViewConfig() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UINib(nibName: Constants.nibName, bundle: nil), forCellReuseIdentifier: Constants.cellIdentifier)
+    }
+    
 }
 
 
+
+
+extension ProductsViewController:  UITableViewDelegate, UITableViewDataSource {
+    
+    //method determines how many rows there will be in the table view.
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return object.count
+    }
+    
+    //    //method sets up each row.
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! TableViewCell
+        let productName = object[indexPath.row].title
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+    
+    
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            let productModel = object[indexPath.row]
+            let vc = ProductDetailsController()
+            vc.passedArray = productModel
+            navigationController?.pushViewController(vc, animated: false)
+        }
+}
