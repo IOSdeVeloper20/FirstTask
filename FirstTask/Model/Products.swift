@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct JsonData: Codable {
-    let products:[Products]
+struct ProductModel: Codable {
+    let products:[ProductData]
 }
 
 
-struct Products: Codable {
+struct ProductData: Codable {
     let id:Int
     let title: String
     let description:String

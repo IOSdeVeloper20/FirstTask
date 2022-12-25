@@ -8,6 +8,5 @@
 import Foundation
 
 struct Constants {
-    static let cellIdentifier = "reusableCell"
     static let nibName = "TableViewCell"
-    }
+}

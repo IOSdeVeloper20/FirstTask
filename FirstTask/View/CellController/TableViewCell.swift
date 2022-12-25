@@ -8,10 +8,10 @@
 import UIKit
 
 class TableViewCell: UITableViewCell {
-
+    static let cellIdentifier = "reusableCell"
     @IBOutlet weak var cellLabel: UILabel!
         
     func set(_ title: String) {
-        cellLabel.text = title
+        cellLabel?.text = title 
     }
 }
